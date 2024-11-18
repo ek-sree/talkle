@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react"
 
 const Otp = () => {
-    const [otp,setOtp] = useState<string[] | null>([])
+    const [otp, setOtp] = useState<string[]>(Array(4).fill(""))
     const [timer,setTimer] = useState(5)
 
     const inputRef = useRef<(HTMLInputElement | null)[]>([]); 
@@ -19,17 +19,20 @@ const Otp = () => {
     },[timer])
 
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>, index:number)=>{
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
         const currentValue = e.target.value;
-        if (/^[0-9]$/.test(currentValue)){
-            const newOtp = [...otp]
-            newOtp[index] =currentValue
-            setOtp(newOtp)
-            if(currentValue && index < inputRef.current.length){
-                inputRef.current[index+1]?.focus();
+            if (/^[0-9]$/.test(currentValue)) {
+            const newOtp = [...otp];
+            newOtp[index] = currentValue;
+            setOtp(newOtp);
+                if (currentValue && index < inputRef.current.length - 1) {
+                inputRef.current[index + 1]?.focus();
             }
+        } else {
+            e.target.value = "";
         }
-    }
+    };
+    
 
     const handleBackSpace=(e:React.KeyboardEvent<HTMLInputElement>, index:number)=>{
         if(e.key=='ArrowLeft'){

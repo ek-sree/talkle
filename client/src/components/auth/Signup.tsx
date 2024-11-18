@@ -13,14 +13,6 @@ const Signup = () => {
         <div className="flex flex-col items-center gap-4">
           <div className="flex flex-col w-full max-w-xs">
             <input
-              type="text"
-              id="name"
-              placeholder="Name"
-              className="py-2 px-4 rounded-xl mb-4 border-2 border-slate-400 bg-slate-600"
-            />
-          </div>
-          <div className="flex flex-col w-full max-w-xs">
-            <input
               type="email"
               id="email"
               placeholder="Phone"
