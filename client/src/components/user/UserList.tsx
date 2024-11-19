@@ -1,7 +1,7 @@
 import { ArrowDownNarrowWide, Search, UserRoundPlus } from "lucide-react" 
-import avatar from '../../../public/images/9286c820b0386e71f0ad7fec5f59c7c4.jpg'
+import dummyUser from '../../constant/dummyUser.json'
  
-const UserList = () => { 
+const UserList = ({onSelectUser}) => { 
   return ( 
     <div className="bg-neutral-800 min-h-screen w-96 ml-[3rem] p-4"> 
         <div className="flex items-center gap-4 mb-6"> 
@@ -24,21 +24,22 @@ const UserList = () => {
             </button>
         </div> 
         <div className="overflow-y-auto max-h-[calc(100vh-14vh)] pr-2">
-            {[...Array(12)].map((_, index) => (
-                <div 
-                    key={index} 
-                    className="mt-6 ml-2 flex border-b border-neutral-700 pb-4 last:border-b-0"
+            {dummyUser.map((user) => (
+                <div
+                onClick={()=>onSelectUser(user)} 
+                    key={user.id} 
+                    className="mt-6 ml-2 flex border-b border-neutral-700 pb-4 last:border-b-0 cursor-pointer hover:bg-slate-800"
                 >
                     <img 
-                        src={avatar} 
+                        src={user.avatar} 
                         alt="profile-dp" 
                         className="w-12 h-12 rounded-full"
                     />
                     <div className="flex flex-col flex-grow ml-4">
-                        <span className="text-white">Sreehari E K</span>
-                        <span className="text-slate-400 text-sm">Call me when u are free</span>
+                        <span className="text-white">{user.name}</span>
+                        <span className="text-slate-400 text-sm">{user.lastMessage}</span>
                     </div>
-                    <span className="h-6 w-6 bg-green-500 rounded-full flex items-center justify-center font-mono ml-4">3</span>
+                    <span className="h-6 w-6 bg-green-500 rounded-full flex items-center justify-center font-mono ml-4">{user.unreadMessages}</span>
                 </div>
             ))}
         </div>

@@ -1,0 +1,47 @@
+[
+  {
+    "id": 1,
+    "senderId": 2,
+    "receiverId": 3,
+    "message": "Hey, how are you doing today?",
+    "date": "2024-02-15",
+    "time": "10:30 AM",
+    "seen": true
+  },
+  {
+    "id": 2,
+    "senderId": 3,
+    "receiverId": 2,
+    "message": "I'm good! Just finished my morning workout.",
+    "date": "2024-02-15", 
+    "time": "10:35 AM",
+    "seen": true
+  },
+  {
+    "id": 3,
+    "senderId": 2,
+    "receiverId": 3,
+    "message": "That's awesome! Want to grab coffee later?",
+    "date": "2024-02-15",
+    "time": "10:40 AM", 
+    "seen": false
+  },
+  {
+    "id": 4,
+    "senderId": 2,
+    "receiverId": 4,
+    "message": "Hi, are you free to discuss the project?",
+    "date": "2024-02-15",
+    "time": "11:15 AM",
+    "seen": true
+  },
+  {
+    "id": 5,
+    "senderId": 4,
+    "receiverId": 2,
+    "message": "Sure, what details do you need?",
+    "date": "2024-11-19",
+    "time": "11:20 AM",
+    "seen": true
+  }
+]

@@ -1,0 +1,17 @@
+[
+    {
+      "id": 1,
+      "name": "Sreehari E K",
+      "avatar": "/images/9286c820b0386e71f0ad7fec5f59c7c4.jpg",
+      "lastMessage": "Call me when you are free",
+      "unreadMessages": 3
+    },
+    {
+      "id": 2,
+      "name": "John Doe",
+      "avatar": "/images/9286c820b0386e71f0ad7fec5f59c7c4.jpg",
+      "lastMessage": "Let's catch up tomorrow!",
+      "unreadMessages": 5
+    }
+  ]
+  
