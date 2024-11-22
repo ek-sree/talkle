@@ -1,0 +1,52 @@
+[
+    {
+        "userId": 1,
+        "name": "Sreehari E K",
+        "statuses": [
+            {
+                "id": "unique_status_id",
+                "imageUrl": "/images/9286c820b0386e71f0ad7fec5f59c7c4.jpg",
+                "timestamp": "2024-02-15T10:30:00Z",
+                "seenBy": ["2", "3"],
+                "expiresAt": "2024-02-16T10:30:00Z"
+            },
+            {
+                "id": "unique_status_id",
+                "imageUrl": "/images/OIP.jpeg",
+                "timestamp": "2024-02-15T10:30:00Z",
+                "seenBy": ["2", "3"],
+                "expiresAt": "2024-02-16T10:30:00Z"
+            },
+            {
+                "id": "unique_status_id",
+                "imageUrl": "/images/9286c820b0386e71f0ad7fec5f59c7c4.jpg",
+                "timestamp": "2024-02-15T10:30:00Z",
+                "seenBy": ["2", "3"],
+                "expiresAt": "2024-02-16T10:30:00Z"
+            }
+        ],
+        "allSeen": false
+    },
+    {
+        "userId": 1,
+        "name": "Sreehari E K",
+        "statuses": [
+            {
+                "id": "unique_status_id",
+                "imageUrl": "/images/9286c820b0386e71f0ad7fec5f59c7c4.jpg",
+                "timestamp": "2024-02-15T10:30:00Z",
+                "seenBy": ["1","3"], 
+                "expiresAt": "2024-02-16T10:30:00Z"
+            },
+            {
+                "id": "unique_status_id",
+                "imageUrl": "/images/9286c820b0386e71f0ad7fec5f59c7c4.jpg",
+                "timestamp": "2024-02-15T10:30:00Z",
+                "seenBy": ["1","3"], 
+                "expiresAt": "2024-02-16T10:30:00Z"
+            }
+        ],
+        "allSeen": false
+    }
+  ]
+  
