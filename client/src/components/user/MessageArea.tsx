@@ -45,7 +45,7 @@ const MessageArea = ({ user }) => {
           <div key={index}>
             {/* Sticky Date Header */}
             {isNewDate && (
-              <div className="sticky top-0 text-center py-1 shadow-sm z-10">
+              <div className="sticky top-0 text-center py-1 shadow-sm">
                 <span className="bg-green-300 px-4 text-black font-sans rounded-xl">
                   {getFormattedDate(message.date)}
                 </span>

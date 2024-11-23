@@ -6,6 +6,8 @@ import PhoneList from '../components/user/PhoneList'
 import PhoneArea from '../components/user/PhoneArea'
 import StatusList from '../components/user/StatusList'
 import StatusArea from '../components/user/StatusArea'
+import Settings from '../components/user/Settings'
+import UserAccount from '../components/user/UserAccount'
 
 const HomePage = () => {
   const [activeSection, setActiveSection] = useState('chats')
@@ -17,17 +19,35 @@ const HomePage = () => {
   
 
   return (
-    <div className='flex'>
+    <div className='flex h-full w-full'>
 
         <SideBar onSectionChange={setActiveSection}/>
-        {activeSection =='chats' &&  <UserList onSelectUser={setSelectUser}/>}
-        {activeSection=='chats' && <ChatArea user={selectUser}/>}
 
-        {activeSection=='phone' && <PhoneList onSelectUserCall={setSelectUserCall}/>}
-        {activeSection=='phone' && <PhoneArea userCall={selectUserCall}/>}
+        {activeSection === 'chats' && (
+        <>
+        <UserList onSelectUser={setSelectUser} />
+        <ChatArea user={selectUser} />
+        </>
+          )}
 
-        {activeSection =='status' && <StatusList/>}
-        {activeSection =='status' && <StatusArea/>}
+
+          {activeSection === 'phone' &&(
+            <>
+            <PhoneList onSelectUserCall={setSelectUserCall}/>
+            <PhoneArea userCall={selectUserCall}/>
+            </>
+          )}
+
+          {activeSection ==='status' &&(
+            <>
+            <StatusList/>
+            <StatusArea/>
+            </>
+          )}
+
+        {activeSection =='settings' && <Settings/>}
+
+        {activeSection=='profile' && <UserAccount/>}
     </div>
   )
 }

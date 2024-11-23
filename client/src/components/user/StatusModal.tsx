@@ -1,11 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 import status from '../../constant/Userstatus.json';
 
-const StatusModal = ({ onClose, isOpen }) => {
+const StatusModal = ({ onClose, isOpen, initialUserId }) => {
     const [currentUserIndex, setCurrentUserIndex] = useState(0);
     const [currentStatusIndex, setCurrentStatusIndex] = useState(0);
     const [progressPercentage, setProgressPercentage] = useState(0);
+
+    useEffect(() => {
+        if (initialUserId) {
+            const userIndex = status.findIndex(user => user.userId === initialUserId);
+            if (userIndex !== -1) {
+                setCurrentUserIndex(userIndex);
+                setCurrentStatusIndex(0);
+                setProgressPercentage(0);
+            }
+        }
+    }, [initialUserId]);
 
     useEffect(() => {
         if (!isOpen || !status.length) return;
@@ -15,19 +26,18 @@ const StatusModal = ({ onClose, isOpen }) => {
                 if (prev >= 100) {
                     const currentUser = status[currentUserIndex];
 
-                    // Move to next status or next user
-                    const nextStatusIndex = (currentStatusIndex + 1) % currentUser.statuses.length;
-
-                    if (nextStatusIndex === 0) {
-                        // If we've cycled through all statuses, move to next user
+                    // Move to next status within current user
+                    if (currentStatusIndex < currentUser.statuses.length - 1) {
+                        setCurrentStatusIndex(prev => prev + 1);
+                    } else {
+                        // If we've reached the last status of current user, move to next user
                         const nextUserIndex = (currentUserIndex + 1) % status.length;
                         setCurrentUserIndex(nextUserIndex);
+                        setCurrentStatusIndex(0);
                     }
-
-                    setCurrentStatusIndex(nextStatusIndex);
                     return 0;
                 }
-                return prev + 2; // Increase speed of progress
+                return prev + 2;
             });
         }, 100);
 
@@ -40,18 +50,29 @@ const StatusModal = ({ onClose, isOpen }) => {
     const currentStatus = currentUser.statuses[currentStatusIndex];
 
     const handlePrevious = () => {
-        const prevUserIndex = currentUserIndex === 0 
-            ? status.length - 1 
-            : currentUserIndex - 1;
-        setCurrentUserIndex(prevUserIndex);
-        setCurrentStatusIndex(0);
+        if (currentStatusIndex > 0) {
+            // If not at first status of current user, go to previous status
+            setCurrentStatusIndex(prev => prev - 1);
+        } else {
+            // If at first status, go to previous user's last status
+            const prevUserIndex = currentUserIndex === 0 ? status.length - 1 : currentUserIndex - 1;
+            const prevUser = status[prevUserIndex];
+            setCurrentUserIndex(prevUserIndex);
+            setCurrentStatusIndex(prevUser.statuses.length - 1);
+        }
         setProgressPercentage(0);
     };
 
     const handleNext = () => {
-        const nextUserIndex = (currentUserIndex + 1) % status.length;
-        setCurrentUserIndex(nextUserIndex);
-        setCurrentStatusIndex(0);
+        if (currentStatusIndex < currentUser.statuses.length - 1) {
+            // If not at last status of current user, go to next status
+            setCurrentStatusIndex(prev => prev + 1);
+        } else {
+            // If at last status, go to next user's first status
+            const nextUserIndex = (currentUserIndex + 1) % status.length;
+            setCurrentUserIndex(nextUserIndex);
+            setCurrentStatusIndex(0);
+        }
         setProgressPercentage(0);
     };
 

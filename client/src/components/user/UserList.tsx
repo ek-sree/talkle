@@ -1,7 +1,21 @@
 import { ArrowDownNarrowWide, Search, UserRoundPlus } from "lucide-react" 
 import dummyUser from '../../constant/dummyUser.json'
+import { useState } from "react"
+import AddUser from "./AddUser";
+import Requests from "./Requests";
  
 const UserList = ({onSelectUser}) => { 
+    const [openAddUser, setOpenAddUser] = useState<boolean>(false);
+    const [openRequests, setRequests] = useState<boolean>(false);
+
+    const handleAddUserModal=()=>{
+        setOpenAddUser(true)
+    }
+
+    const handleRequestsModal=()=>{
+        setRequests(true);
+    }
+
   return ( 
     <div className="bg-neutral-800 min-h-screen w-96 ml-[3rem] p-4"> 
         <div className="flex items-center gap-4 mb-6"> 
@@ -16,11 +30,11 @@ const UserList = ({onSelectUser}) => {
                     className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5"
                 /> 
             </div>
-            <button className="hover:bg-neutral-700 p-2 rounded-full transition-colors">
+            <button onClick={handleAddUserModal} className="hover:bg-neutral-700 p-2 rounded-full transition-colors">
                 <UserRoundPlus color="white" className="w-6 h-6"/> 
             </button>
             <button className="hover:bg-neutral-700 p-2 rounded-full transition-colors">
-                <ArrowDownNarrowWide color="white" className="w-6 h-6"/> 
+                <ArrowDownNarrowWide onClick={handleRequestsModal} color="white" className="w-6 h-6"/> 
             </button>
         </div> 
         <div className="overflow-y-auto max-h-[calc(100vh-14vh)] pr-2">
@@ -43,6 +57,18 @@ const UserList = ({onSelectUser}) => {
                 </div>
             ))}
         </div>
+            {openAddUser &&(
+                <AddUser
+                isOpen={openAddUser}
+                onClose={()=>setOpenAddUser(false)}
+                />
+            )}
+            {openRequests &&(
+                <Requests
+                isOpen={openRequests}
+                onClose={()=>setRequests(false)}
+                />
+            )}
     </div> 
   ) 
 } 
