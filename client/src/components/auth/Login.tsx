@@ -4,10 +4,10 @@ const Login = () => {
   return (
     <div className="bg-gray-900 min-h-screen flex items-center justify-center">
       <div className="bg-gray-800 w-[25rem] p-8 rounded-xl">
-        <p className="text-center font-bold text-white text-2xl mb-2 bg-gradient-to-t from-violet-600 to-rose-500 bg-clip-text text-transparent">
+        <p className="text-center font-bold text-2xl mb-2 bg-gradient-to-t from-violet-600 to-rose-500 bg-clip-text text-transparent">
           Talkle
         </p>
-        <p className="text-center font-bold text-white text-xl mb-4 bg-gradient-to-t from-violet-200 to-indigo-500 bg-clip-text text-transparent">
+        <p className="text-center font-bold text-xl mb-4 bg-gradient-to-t from-violet-200 to-indigo-500 bg-clip-text text-transparent">
           A simple chating app
         </p>
         <div className="flex flex-col items-center gap-4">
@@ -15,7 +15,7 @@ const Login = () => {
             <input
               type="email"
               id="email"
-              placeholder="Phone"
+              placeholder="Email"
               className="py-2 px-4 rounded-xl mb-4 border-2 border-slate-400 bg-slate-600"
             />
           </div>
