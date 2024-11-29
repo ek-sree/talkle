@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "module": "ESNext",  
+    "moduleResolution": "Node", 
+    "target": "ESNext", 
+    "esModuleInterop": true,  
+    "skipLibCheck": true,
+    "strict": true,
+    "resolveJsonModule": true,
+    "baseUrl": "./src",  
+    "paths": {
+      "*": ["node_modules/*"]  
+    }
+  },
+  "include": ["src/**/*"]
+}
