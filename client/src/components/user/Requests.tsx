@@ -1,8 +1,14 @@
-import { X } from "lucide-react";
+import { CookingPot, UserRoundCheck, X } from "lucide-react";
 import { useState } from "react";
+import ViewNotes from "./ViewNotes";
 
 const Requests = ({ isOpen, onClose }) => {
   const [activeTab, setActiveTab] = useState('incoming');
+  const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
+
+  const handleViewNote=()=>{
+    setIsOpenModal(true);
+  }
   
   if (!isOpen) return null;
 
@@ -45,7 +51,7 @@ const Requests = ({ isOpen, onClose }) => {
         </div>
 
         {/* Incoming Request Section */}
-        <div className="mt-4 px-4">
+        {activeTab=='incoming'?(<div className="mt-4 px-4">
           <div className="flex items-center justify-between p-4 bg-neutral-800 rounded-xl hover:bg-neutral-700 transition-colors">
             <div className="flex items-center gap-3">
               <img 
@@ -57,15 +63,45 @@ const Requests = ({ isOpen, onClose }) => {
             </div>
             <div className="flex gap-2">
               <button className="px-4 py-1.5 text-sm font-medium rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 transition-colors">
-                Accept
+              <UserRoundCheck />
+              </button>
+              <button onClick={handleViewNote} className="px-4 py-1.5 text-sm font-medium rounded-lg bg-neutral-400 text-white hover:bg-neutral-500 transition-colors">
+                View
               </button>
               <button className="px-4 py-1.5 text-sm font-medium rounded-lg bg-neutral-700 text-gray-300 hover:bg-neutral-600 transition-colors">
-                Reject
+              <CookingPot />
               </button>
             </div>
           </div>
+        </div>):(
+          <div className="mt-4 px-4">
+          <div className="flex items-center justify-between p-4 bg-neutral-800 rounded-xl hover:bg-neutral-700 transition-colors">
+            <div className="flex items-center gap-3">
+              <img 
+                src="/api/placeholder/48/48" 
+                alt="" 
+                className="w-12 h-12 rounded-full ring-2 ring-indigo-600/50"
+              />
+              <span className="text-white font-medium">Sreehari</span>
+            </div>
+            <div className="flex gap-2">
+              <button className="px-4 py-1.5 text-sm font-medium rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 transition-colors">
+                Cancel
+              </button>
+              {/* <button className="px-4 py-1.5 text-sm font-medium rounded-lg bg-neutral-700 text-gray-300 hover:bg-neutral-600 transition-colors">
+                Reject
+              </button> */}
+            </div>
+          </div>
         </div>
+        )}
       </div>
+      {isOpenModal &&(
+        <ViewNotes
+        isOpen={isOpenModal}
+        onClose={()=>setIsOpenModal(false)}
+        />
+      )}
     </div>
   );
 };

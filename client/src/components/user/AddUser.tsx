@@ -1,8 +1,10 @@
 import { Search, X, UserPlus } from "lucide-react";
 import { useState } from "react";
+import AddUserModal from "./AddUserModal";
 
 const AddUser = ({ isOpen, onClose }) => {
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
   
   if (!isOpen) return null;
 
@@ -16,6 +18,11 @@ const AddUser = ({ isOpen, onClose }) => {
     { id: 7, name: "Emma Thompson" },
     { id: 8, name: "Michael Brown" },
   ];
+
+
+  const handleModalOpen = ()=>{
+    setIsOpenModal(true);
+  }
   
   return (
     <div className="bg-black/80 inset-0 z-50 flex items-center justify-center fixed backdrop-blur-sm">
@@ -81,7 +88,7 @@ const AddUser = ({ isOpen, onClose }) => {
                   <p className="text-sm text-neutral-500 truncate">Online</p>
                 </div>
 
-                <button className="opacity-0 group-hover:opacity-100 px-3 py-1.5 rounded-lg 
+                <button onClick={handleModalOpen} className="opacity-0 group-hover:opacity-100 px-3 py-1.5 rounded-lg 
                                  bg-indigo-600 text-white text-sm font-medium flex-shrink-0
                                  hover:bg-indigo-700 transition-all duration-200">
                   Add
@@ -91,6 +98,12 @@ const AddUser = ({ isOpen, onClose }) => {
           </div>
         </div>
       </div>
+      {isOpenModal &&(
+        <AddUserModal
+        isOpen={isOpenModal}
+        onClose={()=>setIsOpenModal(false)}
+        />
+      )}
     </div>
   );
 };

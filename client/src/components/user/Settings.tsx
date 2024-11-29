@@ -24,6 +24,10 @@ const Settings = () => {
               <button className="text-xl font-medium mb-4">Privacy</button>
             </section>
           </div>
+          <div className="flex justify-center">
+
+          <button className="bg-gradient-to-t from-red-400 to-red-600 py-4 px-6 rounded-xl mt-6 hover:bg-gradient-to-t hover:from-red-500 hover:to-red-700">Logout</button>
+          </div>
         </div>
         {blockUserModal &&(
             <BlockedUserModal

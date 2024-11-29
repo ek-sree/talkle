@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react"
 
 const Otp = () => {
     const [otp, setOtp] = useState<string[]>(Array(4).fill(""))
-    const [timer,setTimer] = useState(5)
+    const [timer,setTimer] = useState(60)
 
     const inputRef = useRef<(HTMLInputElement | null)[]>([]); 
 
