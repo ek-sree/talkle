@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom"
 import { IUserInput } from "../../interface/IUserInput"
 import authAxios from "../../api/axios/authAxios"
 import { AUTH_ENDPOINTS } from "../../api/endpoints/authEndpoints"
+import { Loader2 } from "lucide-react"
 
 const Signup = () => {
 
@@ -52,11 +53,7 @@ const Signup = () => {
     if (Object.keys(errors).length === 0) {
       try {
         setLoading(true)
-        const response = await authAxios.post(AUTH_ENDPOINTS.REGISTER, formData, {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
+        const response = await authAxios.post(AUTH_ENDPOINTS.REGISTER, formData);
         if(response.status==200){
           navigate('/otp')
         }
@@ -77,6 +74,7 @@ const Signup = () => {
         <p className="text-center font-bold text-xl mb-4 bg-gradient-to-t from-violet-200 to-indigo-500 bg-clip-text text-transparent">
           Chat with random peoples.!
         </p>
+        <p className="mb-3 text-xl text-neutral-400 text-center">Sign up Now.!</p>
         <div className="flex flex-col items-center gap-4">
           <div className="flex flex-col w-full max-w-xs">
             <input
@@ -114,13 +112,20 @@ const Signup = () => {
             </div>
           </div>
 
-          <button onClick={handleSubmit} disabled={loading} className="py-2 w-full bg-gradient-to-r from-indigo-600 to-indigo-400 text-white rounded-xl mt-4 hover:from-blue-600 hover:to-indigo-600 mb-5">
-          {loading ? (
-              <span className="spinner-border spinner-border-sm"></span> 
-            ) : (
-              "Sign Up"
-            )}
-          </button>
+          <button 
+  onClick={handleSubmit} 
+  disabled={loading} 
+  className="py-2 w-full bg-gradient-to-r from-indigo-600 to-indigo-400 text-white rounded-xl mt-4 hover:from-blue-600 hover:to-indigo-600 mb-5 flex items-center justify-center gap-2"
+>
+  {loading ? (
+    <>
+      <Loader2 className="w-5 h-5 animate-spin" />
+      <span>Signing up...</span>
+    </>
+  ) : (
+    "Sign Up"
+  )}
+</button>
         </div>
         <Link to='/login' className="flex justify-center"><span className="text-slate-300 hover:text-slate-200 cursor-pointer">Already have an account in <span className="bg-gradient-to-t from-violet-600 to-rose-500 bg-clip-text text-transparent">Talkle</span> ?</span></Link>
       </div>
