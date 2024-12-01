@@ -12,7 +12,6 @@ class AuthController {
 
     public register = async (req: Request, res: Response): Promise<void> => {
         try {
-            logger.debug('Register request body:', req.body);
             
             const { email, password } = req.body;
 
@@ -24,12 +23,33 @@ class AuthController {
             }
 
             const responses = await this.authUseCase.registerUser(email, password);
-            
+            if(responses.status==200){
+                req.session.email=email;
+            }
             res.status(responses.status).json({ 
                 message: responses.message 
             });
         } catch (error) {
             logger.error("Register error on controller", error);
+            res.status(StatusCode.InternalServerError).json({ 
+                message: "Internal server error" 
+            });
+        }
+    }
+
+    public otpVerify= async(req:Request, res: Response): Promise<void>=>{
+        try {
+            const otp = req.body.otp
+            logger.warn(req.body.otp)
+            logger.debug("otp got",otp)
+            const email = req.session.email || ''
+            const response = await this.authUseCase.verifyOtp(otp,email);
+            if(response.status==200){
+                delete req.session.email;
+            }
+            res.status(response.status).json({message:response.message, data:response.data})
+        } catch (error) {
+            logger.error("Verify Otp error on controller", error);
             res.status(StatusCode.InternalServerError).json({ 
                 message: "Internal server error" 
             });

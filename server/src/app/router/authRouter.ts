@@ -8,5 +8,6 @@ const authController = AuthDIContainer.getAuthController();
 
 
 authRouter.post("/register", authController.register);  
+authRouter.post('/otpVerify', authController.otpVerify)
 
 export default authRouter;

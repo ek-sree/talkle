@@ -7,10 +7,15 @@
     "skipLibCheck": true,
     "strict": true,
     "resolveJsonModule": true,
-    "baseUrl": "./src",  
+    "baseUrl": "./src",
+    "typeRoots": ["./src/types", "./node_modules/@types"],
     "paths": {
       "*": ["node_modules/*"]  
-    }
+    },
+    "types": ["express-session"]
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*", "src/types/**/*.d.ts"],
+  "ts-node": {
+    "esm": true
+  }
 }
