@@ -1,10 +1,19 @@
 import { useEffect, useRef, useState } from "react"
+import authAxios from "../../api/axios/authAxios";
+import { AUTH_ENDPOINTS } from "../../api/endpoints/authEndpoints";
+import { useNavigate } from "react-router-dom";
+import { IEmailVerify } from "../../interface/IEmailVerify";
+import { Loader2 } from "lucide-react";
 
 const Otp = () => {
     const [otp, setOtp] = useState<string[]>(Array(4).fill(""))
     const [timer,setTimer] = useState(60)
+    const [error, setError] = useState<string>('');
+    const [loading, setLoading] = useState<boolean>(false);
 
     const inputRef = useRef<(HTMLInputElement | null)[]>([]); 
+
+    const navigate = useNavigate();
 
     
     useEffect(()=>{
@@ -52,9 +61,43 @@ const Otp = () => {
         
     }
 
-    const handleSubmit=()=>{
-        console.log(otp);
-        
+    const handleSubmit= async()=>{
+      setLoading(true);
+        try {
+          const otpValue = otp.join('');
+          console.log(otpValue);
+          
+          const response = await authAxios.post(AUTH_ENDPOINTS.OTPVERIFY,{otp:otpValue});
+          console.log(response);
+          
+          switch(response.data.data.verifyType){
+            case IEmailVerify.Register:
+              localStorage.setItem("flowAction","verifyed")
+              navigate('/profile-create')
+              break;
+
+            case IEmailVerify.ForgotPassword:
+              navigate('/login')
+              break;
+              
+            case IEmailVerify.NewPassword:
+              navigate('/settings')
+              break;
+
+            case IEmailVerify.EmailChange:
+              navigate('/settings')  
+              break;
+
+              default:
+                setError(response.data.message)
+                break;
+          }
+        } catch (error) {
+          console.log("Error sending otp",error);
+          
+        }finally{
+          setLoading(false)
+        }
     }
 
   return (
@@ -77,14 +120,42 @@ const Otp = () => {
               className="py-2 px-4 w-14 text-center rounded-xl border-2 border-slate-400 bg-slate-600 focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
         ))}
+        {error &&(
+          <div className="text-red-500">{error}</div>
+        )}
           </div>
-        <span className="text-slate-300">Resend otp in {timer}</span>
-          {timer>0?(<button onClick={handleSubmit} className="py-2 w-full bg-gradient-to-r from-indigo-600 to-indigo-400 text-white rounded-xl mt-4 hover:from-blue-600 hover:to-indigo-600 mb-5">
-            Confirm
-          </button>):(
-          <button onClick={handleSubmit} className="py-2 w-full bg-gradient-to-r from-indigo-600 to-indigo-400 text-white rounded-xl mt-4 hover:from-blue-600 hover:to-indigo-600 mb-5">
-          Resend Otp
-        </button>)}
+        {timer>0 &&(<span className="text-slate-300">Resend otp in {timer}</span>)}
+        {timer > 0 ? (
+                        <button 
+                            onClick={handleSubmit} 
+                            disabled={loading}
+                            className={`py-2 w-full bg-gradient-to-r from-indigo-600 to-indigo-400 text-white rounded-xl mt-4 hover:from-blue-600 hover:to-indigo-600 mb-5 flex items-center justify-center gap-2 ${loading ? 'opacity-75 cursor-not-allowed' : ''}`}
+                        >
+                            {loading ? (
+                                <>
+                                    <Loader2 className="w-5 h-5 animate-spin" />
+                                    <span>Verifying...</span>
+                                </>
+                            ) : (
+                                "Confirm"
+                            )}
+                        </button>
+                    ) : (
+                        <button 
+                            onClick={handleSubmit}
+                            disabled={loading}
+                            className={`py-2 w-full bg-gradient-to-r from-indigo-600 to-indigo-400 text-white rounded-xl mt-4 hover:from-blue-600 hover:to-indigo-600 mb-5 flex items-center justify-center gap-2 ${loading ? 'opacity-75 cursor-not-allowed' : ''}`}
+                        >
+                            {loading ? (
+                                <>
+                                    <Loader2 className="w-5 h-5 animate-spin" />
+                                    <span>Sending...</span>
+                                </>
+                            ) : (
+                                "Resend OTP"
+                            )}
+                        </button>
+                    )}
         </div>
         
       </div>

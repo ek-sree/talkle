@@ -4,6 +4,9 @@ import { REFRESH_ENDPOINTS } from '../endpoints/refreshEndpoints';
 const authAxios = axios.create({
   baseURL: import.meta.env.VITE_API_URL_AUTH,
   withCredentials: true, 
+  headers: {
+    'Content-Type': 'application/json', 
+  },
 });
 
 const getAccessTokenFromSession = (): string | null => {

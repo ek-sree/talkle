@@ -10,6 +10,8 @@ const Login = () => {
         <p className="text-center font-bold text-xl mb-4 bg-gradient-to-t from-violet-200 to-indigo-500 bg-clip-text text-transparent">
           A simple chating app
         </p>
+        <p className="mb-3 text-xl text-neutral-400 text-center">Login in.!</p>
+
         <div className="flex flex-col items-center gap-4">
           <div className="flex flex-col w-full max-w-xs">
             <input
