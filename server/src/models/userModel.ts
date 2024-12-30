@@ -1,10 +1,12 @@
-import mongoose, { Document, Schema } from "mongoose";
+import mongoose, { Document, Schema, Types } from "mongoose";
 
 interface IUserInterface extends Document{
+    _id: Types.ObjectId;
     name: string;
+    userName:string;
     email: string;
     password: string;
-    image: string;
+    avatar: string;
     isStatus: boolean;
     fieldUpdateHistory: Map<string, Date>;
 
@@ -15,6 +17,11 @@ const userSchema : Schema<IUserInterface> = new Schema({
         type: String,
         required: true,
         trim: true
+    },
+    userName:{
+        type: String,
+        require:true,
+        trim:true
     },
     email:{
         type: String,
@@ -28,7 +35,7 @@ const userSchema : Schema<IUserInterface> = new Schema({
         required: true,
         trim: true
     },
-    image: {
+    avatar: {
         type: String,
         updateTime:{
             type: Date

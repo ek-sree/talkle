@@ -1,4 +1,5 @@
 import winston from "winston";
+import { format } from "winston";
 
 winston.addColors({
   info: 'green',
@@ -10,21 +11,19 @@ winston.addColors({
 const logger = winston.createLogger({
   level: process.env.NODE_ENV === "production" ? "error" : "debug",
   format: winston.format.combine(
-    // winston.format.timestamp(),
-    winston.format.colorize(),
-    winston.format.printf(({ timestamp, level, message }) => {
-      return `${timestamp} [${level.toUpperCase()}]: ${message}`;
+    format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }), 
+    format.colorize(),
+    format.printf(({ timestamp, level, message }) => {
+      return `${timestamp} [${level}]: ${message}`;
     })
   ),
   transports: [
     new winston.transports.Console({
       format: winston.format.combine(
-        winston.format.colorize(),
-        winston.format.simple()
+        format.colorize(),
+        format.simple()
       )
-    }), 
-    // new winston.transports.File({ filename: "logs/error.log", level: "error" }), // Logs errors to file
-    // new winston.transports.File({ filename: "logs/combined.log" }) // Logs all levels to file
+    })
   ],
 });
 

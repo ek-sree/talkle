@@ -10,7 +10,7 @@ export class AuthDIContainer {
         const authUseCase = new AuthUseCase(authRepository);
         const authController = new AuthController(authUseCase);
 
-        logger.debug("AuthController instantiated with AuthUseCase:", authController);
+        logger.info("AuthController instantiated with AuthUseCase:", authController);
         return authController;
     }
 }
