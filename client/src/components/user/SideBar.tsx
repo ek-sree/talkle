@@ -1,9 +1,13 @@
 import { useState } from 'react';
 import { Blend, Bolt, MessageSquareDot, Phone } from "lucide-react";
-import avatar from '../../../public/images/9286c820b0386e71f0ad7fec5f59c7c4.jpg'
+import { useSelector } from 'react-redux';
+import { RootState } from '../../states/redux/store/store';
 
 const SideBar = ({onSectionChange}) => {
   const [activeIcon, setActiveIcon] = useState('chats');
+
+
+  const avatar = useSelector((state: RootState)=>state.UserAuth.avatar)
 
   const handleClick = (id) => {
     setActiveIcon(id);
@@ -23,7 +27,7 @@ const SideBar = ({onSectionChange}) => {
     >
       {isProfile ? (
         <img
-          src={avatar}
+          src={avatar ? avatar :''}
           alt="profile-pic"
           className={`
             rounded-full

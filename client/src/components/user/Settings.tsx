@@ -1,13 +1,35 @@
 import { useState } from "react";
 import BlockedUserModal from "./BlockedUserModal";
+import Axios from "../../api/axios/axios";
+import { AUTH_ENDPOINTS } from "../../api/endpoints/authEndpoints";
+import { useDispatch } from "react-redux";
+import { clearUser } from "../../states/redux/slice/userSlice";
+import { useNavigate } from "react-router-dom";
 
 const Settings = () => {
+
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
 
     const [blockUserModal, setBlockUserModal] = useState<boolean>(false)
 
 
     const handleBlockUserModal = ()=>{
         setBlockUserModal(true);
+    }
+
+    const handleLogout=async()=>{
+      try {
+        const response = await Axios.post(AUTH_ENDPOINTS.LOGOUT)
+        if(response.status==200){
+          dispatch(clearUser())
+          sessionStorage.removeItem('accessToken')
+          navigate('/login')
+        }
+      } catch (error) {
+        console.log("Logout error",error);
+        
+      }
     }
 
     return (
@@ -26,7 +48,7 @@ const Settings = () => {
           </div>
           <div className="flex justify-center">
 
-          <button className="bg-gradient-to-t from-red-400 to-red-600 py-4 px-6 rounded-xl mt-6 hover:bg-gradient-to-t hover:from-red-500 hover:to-red-700">Logout</button>
+          <button className="bg-gradient-to-t from-red-400 to-red-600 py-4 px-6 rounded-xl mt-6 hover:bg-gradient-to-t hover:from-red-500 hover:to-red-700" onClick={handleLogout}>Logout</button>
           </div>
         </div>
         {blockUserModal &&(

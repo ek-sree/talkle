@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from "react"
-import authAxios from "../../api/axios/authAxios";
 import { AUTH_ENDPOINTS } from "../../api/endpoints/authEndpoints";
 import { useNavigate } from "react-router-dom";
 import { IEmailVerify } from "../../interface/IEmailVerify";
 import { Loader2 } from "lucide-react";
+import { toast, Toaster } from "sonner";
+import Axios from "../../api/axios/axios";
 
 const Otp = () => {
     const [otp, setOtp] = useState<string[]>(Array(4).fill(""))
@@ -67,24 +68,28 @@ const Otp = () => {
           const otpValue = otp.join('');
           console.log(otpValue);
           
-          const response = await authAxios.post(AUTH_ENDPOINTS.OTPVERIFY,{otp:otpValue});
+          const response = await Axios.post(AUTH_ENDPOINTS.OTPVERIFY,{otp:otpValue});
           console.log(response);
           
           switch(response.data.data.verifyType){
             case IEmailVerify.Register:
               localStorage.setItem("flowAction","verifyed")
+              localStorage.setItem("email",response.data.data.email);
               navigate('/profile-create')
               break;
 
             case IEmailVerify.ForgotPassword:
+              localStorage.setItem("email",response.data.data.email);
               navigate('/login')
               break;
               
             case IEmailVerify.NewPassword:
+              localStorage.setItem("email",response.data.data.email);
               navigate('/settings')
               break;
 
             case IEmailVerify.EmailChange:
+              localStorage.setItem("email",response.data.data.email);
               navigate('/settings')  
               break;
 
@@ -92,9 +97,16 @@ const Otp = () => {
                 setError(response.data.message)
                 break;
           }
-        } catch (error) {
-          console.log("Error sending otp",error);
-          
+        } catch (error: any) {
+          if (error.response) {
+            if (error.response.status === 400) {
+              toast.error(error.response.data.message || "Entered otp is wrong");
+            } else {
+              toast.error("An error occurred while logging in. Please try again.");
+            }
+          } else {
+            toast.error("Network error. Please check your connection.");
+          }
         }finally{
           setLoading(false)
         }
@@ -102,6 +114,7 @@ const Otp = () => {
 
   return (
     <div className="bg-gray-900 min-h-screen flex items-center justify-center">
+            <Toaster position="top-center" expand={false} richColors/>
       <div className="bg-gray-800 w-[27rem] p-8 rounded-xl">
         <p className="text-center font-bold text-white text-2xl mb-5 bg-gradient-to-t from-violet-600 to-rose-500 bg-clip-text text-transparent">
           Talkle
